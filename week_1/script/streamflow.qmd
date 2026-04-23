@@ -1,0 +1,33 @@
+---
+title: "streamflow"
+format: html
+---
+
+```{r}
+
+library(here)
+library(tidyverse)
+
+#read in the data
+data = read.csv(here("week_1/data", "p301.csv"  ))
+
+# aggregate by water year 
+
+p301_yearly <- data |>
+  group_by(wy) |>
+  summarise(total_streamflow = sum(streamflow), 
+            total_precip = sum(precip),
+            percent_streamflow = (total_streamflow / total_precip) * 100)
+
+# calcualte mean, range and standard deviation of percent streamflow across 
+
+mean(p301_yearly$percent_streamflow) 
+
+
+range(p301_yearly$percent_streamflow)
+
+sd(p301_yearly$percent_streamflow)
+
+```
+
+Here I am making a mistake
