@@ -29,5 +29,3 @@ range(p301_yearly$percent_streamflow)
 sd(p301_yearly$percent_streamflow)
 
 ```
-
-Here I am making a mistake
