@@ -30,8 +30,4 @@ sd(p301_yearly$percent_streamflow)
 
 ```
 
-
-This is coming from my R
-
-Im confused 
-its okay <333 676766767
+This is coming from my git 
