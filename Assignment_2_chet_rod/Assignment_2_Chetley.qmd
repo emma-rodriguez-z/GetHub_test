@@ -1,11 +1,12 @@
 ---
-title: "Assignment_2"
+title: "Assignment_2_Chetley"
+author: "Lauren Chetley"
 format: html
 editor: visual
 ---
 
-## Quarto
-## Loading in the data 
+## Loading in the data
+
 ```{r}
 library(dataRetrieval)
 
@@ -17,7 +18,7 @@ endDate <- "2023-12-31"
 temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
 ```
 
-## Organizing Data 
+## Organizing Data
 
 ```{r}
 # rename columns for clarity
@@ -38,5 +39,16 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 
 ```
 
+## Monthly Summary Data - January
 
+```{r}
+`#filter for January Temperatures 
+jan_data<-temp_data|>
+  select(month,temp_C,year)|>
+  filter(month=="Jan")|>
+  filter(year=="2010")
 
+#make some summary statistics 
+#make a glm - generalized linear model for the data pulled abor 
+
+```
