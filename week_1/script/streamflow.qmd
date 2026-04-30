@@ -27,10 +27,17 @@ mean(p301_yearly$percent_streamflow)
 range(p301_yearly$percent_streamflow)
 
 sd(p301_yearly$percent_streamflow)
+
 ```
 
+<<<<<<< HEAD
 Im confused 
 
 its okay <333 676766767
 
 
+=======
+
+
+merge test again :) 
+>>>>>>> 94934efa11da5895991b867eae6c3cdbcef11dcf
