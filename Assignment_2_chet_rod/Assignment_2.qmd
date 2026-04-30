@@ -5,8 +5,7 @@ editor: visual
 ---
 
 ## Quarto
-
-```{#install.packages("dataRetrieval")}
+```{r}
 library(dataRetrieval)
 
 siteNumbers <- c("14211720", "14211010", "14166000")
