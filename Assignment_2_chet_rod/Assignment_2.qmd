@@ -18,6 +18,9 @@ temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
 
 ```{r}
 # rename columns for clarity
+library(date)
+library(lubridate)
+library(tidyverse)
 colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
 # extract some date info for use later
 temp_data$month = month(temp_data$Date, label=TRUE)
