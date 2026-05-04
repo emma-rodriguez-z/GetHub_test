@@ -57,6 +57,8 @@ summary(aug_model)
 
 ```
 
+## August Plot
+
 ```{r}
 #Aug Plot
 ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
