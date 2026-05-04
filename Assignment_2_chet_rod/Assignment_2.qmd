@@ -62,31 +62,7 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 
 ```
 
-## Monthly Summary Data - August
-
-This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.
-
-```{r}
-
-aug_data <- subset(temp_data, month == "Aug")
-
-colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
-
-temp_data$month <- month(temp_data$Date, label = TRUE)
-temp_data$year <- year(temp_data$Date)
-
-aug_data <- subset(temp_data, month == "Aug")
-
-aug_model <- glm(temp_C ~ year * site_no, data = aug_data)
-
-summary(aug_model)
-
-
-```
-
 ## Monthly Summary Data - January
-
-## August Plot
 
 ```{r}
 #filter for January Temperatures 
@@ -120,6 +96,30 @@ ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
 #make a glm - generalized linear model for the data pulled abor 
 
 ```
+
+## Monthly Summary Data - August
+
+This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.
+
+```{r}
+
+aug_data <- subset(temp_data, month == "Aug")
+
+colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
+
+temp_data$month <- month(temp_data$Date, label = TRUE)
+temp_data$year <- year(temp_data$Date)
+
+aug_data <- subset(temp_data, month == "Aug")
+
+aug_model <- glm(temp_C ~ year * site_no, data = aug_data)
+
+summary(aug_model)
+
+
+```
+
+
 
 ### Results Summary
 
