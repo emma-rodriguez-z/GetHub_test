@@ -26,7 +26,9 @@ editor: visual
 ---
 
 ## Quarto
-## Loading in the data 
+
+## Loading in the data
+
 ```{r}
 library(dataRetrieval)
 library(tidyverse)
@@ -39,7 +41,7 @@ endDate <- "2023-12-31"
 temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
 ```
 
-## Organizing Data 
+## Organizing Data
 
 ```{r}
 # rename columns for clarity
@@ -81,7 +83,10 @@ summary(aug_model)
 
 
 ```
+
 ## Monthly Summary Data - January
+
+## August Plot
 
 ```{r}
 #filter for January Temperatures 
@@ -115,3 +120,11 @@ ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
 #make a glm - generalized linear model for the data pulled abor 
 
 ```
+
+### Results Summary
+
+Both the model results and the plot show a clear increase in August stream temperatures over time. The positive and highly significant year coefficient (0.13, p \< 0.001) indicates that temperatures are rising by about 0.13°C per year at the baseline site.
+
+The plot supports this pattern, with upward-sloping trend lines across all sites. However, the rate of warming differs slightly between locations. Site 14211010 shows a significantly faster increase in temperature compared to the baseline, while site 14211720 does not differ significantly.
+
+Overall, August temperatures are increasing across the Willamette River sites, with some variation in how quickly different locations are warming.
