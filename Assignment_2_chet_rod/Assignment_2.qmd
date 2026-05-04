@@ -4,8 +4,6 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
 ```{r}
 library(dataRetrieval)
 library(tidyverse)
@@ -36,3 +34,48 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
   theme_minimal()
 
 ```
+
+## August Stream Temperature Analysis
+
+This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.
+
+```{r}
+
+aug_data <- subset(temp_data, month == "Aug")
+
+colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
+
+temp_data$month <- month(temp_data$Date, label = TRUE)
+temp_data$year <- year(temp_data$Date)
+
+aug_data <- subset(temp_data, month == "Aug")
+
+aug_model <- glm(temp_C ~ year * site_no, data = aug_data)
+
+summary(aug_model)
+
+
+```
+
+```{r}
+#Aug Plot
+ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1.2) +
+  scale_color_manual(values = c("#08306B", "#2171B5", "#6BAED6")) +
+  labs(
+    title = "August Stream Temperature Trends",
+    x = "Year",
+    y = "Temperature (°C)",
+    color = "Site"
+  ) +
+  theme_minimal()
+```
+
+## August Temperature Trend Results
+
+The GLM results indicate a statistically significant increase in August stream temperatures over time. The coefficient for year (0.12975, p \< 0.001) shows that temperatures are increasing by approximately 0.13°C per year at the baseline site.
+
+The interaction terms reveal differences in trends between sites. Site 14211010 has a significantly higher rate of warming (0.04627, p \< 0.01), indicating that temperatures at this site are increasing faster than the baseline. In contrast, site 14211720 does not show a statistically significant difference in trend (p = 0.366), suggesting similar warming patterns to the baseline site.
+
+Overall, the results show a clear warming trend in August stream temperatures, with some variation in the rate of increase across sites.
