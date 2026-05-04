@@ -78,7 +78,7 @@ jan_data<-temp_data|>
 
 jan_summary <- jan_data |>
   group_by(site_no, year) |>
-  summarize(mean_temp = mean(temp_C, na.rm = TRUE), .groups = "drop")
+  summarize(mean_temp = mean(temp_c, na.rm = TRUE), .groups = "drop")
 
 ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
   geom_point(alpha = 0.4) +
@@ -110,3 +110,46 @@ summary(Jan_model)
 ```
 
 January stream temperatures show a slight upward trend over time, though this is only marginally significant. Temperatures differ across sites, with some sites consistently cooler than others. One site shows a stronger and statistically significant warming trend, suggesting that temperature changes vary by location.
+## Monthly Summary Data - August
+
+This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.
+
+```{r}
+
+aug_data <- subset(temp_data, month == "Aug")
+
+colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
+
+temp_data$month <- month(temp_data$Date, label = TRUE)
+temp_data$year <- year(temp_data$Date)
+
+aug_data <- subset(temp_data, month == "Aug")
+
+aug_model <- glm(temp_C ~ year * site_no, data = aug_data)
+
+summary(aug_model)
+
+
+```
+
+```{r}
+ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
+  geom_point(alpha = 0.3) +
+  geom_smooth(method = "lm", se = FALSE, linewidth = 1.2) +
+  scale_color_manual(values = c("#08306B", "#2171B5", "#6BAED6")) +
+  labs(
+    title = "August Stream Temperature Trends",
+    x = "Year",
+    y = "Temperature (°C)",
+    color = "Site"
+  ) +
+  theme_minimal()
+```
+
+### Results Summary
+
+Both the model results and the plot show a clear increase in August stream temperatures over time. The positive and highly significant year coefficient (0.13, p \< 0.001) indicates that temperatures are rising by about 0.13°C per year at the baseline site.
+
+The plot supports this pattern, with upward-sloping trend lines across all sites. However, the rate of warming differs slightly between locations. Site 14211010 shows a significantly faster increase in temperature compared to the baseline, while site 14211720 does not differ significantly.
+
+Overall, August temperatures are increasing across the Willamette River sites, with some variation in how quickly different locations are warming.
