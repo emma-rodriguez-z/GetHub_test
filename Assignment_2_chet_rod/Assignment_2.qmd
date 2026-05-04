@@ -38,5 +38,37 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 
 ```
 
+## Monthly Summary Data - January
 
+```{r}
+#filter for January Temperatures 
+library(janitor)
+temp_data <- temp_data |>
+  clean_names()
 
+jan_data<-temp_data|>
+  filter(month=="Jan")
+
+jan_summary <- jan_data |>
+  group_by(site_no, year) |>
+  summarize(mean_temp = mean(temp_C, na.rm = TRUE), .groups = "drop")
+
+ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = TRUE) +
+  scale_color_manual(values = c(
+    "#4CC9F0", 
+    "#F72585", 
+    "#66FF00"  
+  )) +
+  labs(title = "January Stream Temperature Trends at Willamette River Sites",
+       x = "Year",
+       y = "Temperature (°C)",
+       color = "Site Number") +
+  theme_minimal()
+  
+
+#make some summary statistics 
+#make a glm - generalized linear model for the data pulled abor 
+
+```
