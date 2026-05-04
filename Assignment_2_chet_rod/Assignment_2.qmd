@@ -156,3 +156,7 @@ Both the model results and the plot show a clear increase in August stream tempe
 The plot supports this pattern, with upward-sloping trend lines across all sites. However, the rate of warming differs slightly between locations. Site 14211010 shows a significantly faster increase in temperature compared to the baseline, while site 14211720 does not differ significantly.
 
 Overall, August temperatures are increasing across the Willamette River sites, with some variation in how quickly different locations are warming.
+
+## Conclusion
+
+Overall, stream temperatures in both August and January show increasing trends over time, though the warming is much stronger and more consistent in August. While all sites generally follow similar patterns, the rate of warming varies by location, with some sites experiencing faster temperature increases than others. These results suggest that stream temperatures are rising across the Willamette River system, which could affect water conditions and aquatic life.
