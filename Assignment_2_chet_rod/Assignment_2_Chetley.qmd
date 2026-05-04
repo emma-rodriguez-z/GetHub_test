@@ -1,35 +1,14 @@
-```{=html}
-<style>
-body {
-  background-color: #fff5f8;
-}
-
-h1, h2, h3 {
-  color: #c2185b;
-}
-
-.title {
-  color: #ad1457;
-}
-
-a {
-  color: #d81b60;
-}
-</style>
-```
-
 ---
-title: "Assignment 2"
-author: "Emma Rodriguez and Lauren Chetley"
+title: "Assignment_2_Chetley"
+author: "Lauren Chetley"
 format: html
 editor: visual
 ---
 
-## Quarto
-## Loading in the data 
+## Loading in the data
+
 ```{r}
 library(dataRetrieval)
-library(tidyverse)
 
 siteNumbers <- c("14211720", "14211010", "14166000")
 parameterCd <- "00010"  # water temperature
@@ -39,7 +18,7 @@ endDate <- "2023-12-31"
 temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
 ```
 
-## Organizing Data 
+## Organizing Data
 
 ```{r}
 # rename columns for clarity
@@ -63,32 +42,11 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 ## Monthly Summary Data - January
 
 ```{r}
-#filter for January Temperatures 
-library(janitor)
-temp_data <- temp_data |>
-  clean_names()
-
+`#filter for January Temperatures 
 jan_data<-temp_data|>
-  filter(month=="Jan")
-
-jan_summary <- jan_data |>
-  group_by(site_no, year) |>
-  summarize(mean_temp = mean(temp_C, na.rm = TRUE), .groups = "drop")
-
-ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
-  geom_point(alpha = 0.4) +
-  geom_smooth(method = "lm", se = TRUE) +
-  scale_color_manual(values = c(
-    "#4CC9F0", 
-    "#F72585", 
-    "#66FF00"  
-  )) +
-  labs(title = "January Stream Temperature Trends at Willamette River Sites",
-       x = "Year",
-       y = "Temperature (°C)",
-       color = "Site Number") +
-  theme_minimal()
-  
+  select(month,temp_C,year)|>
+  filter(month=="Jan")|>
+  filter(year=="2010")
 
 #make some summary statistics 
 #make a glm - generalized linear model for the data pulled abor 
