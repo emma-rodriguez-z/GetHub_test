@@ -133,7 +133,6 @@ ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
   theme_minimal()
 ```
 
-
 ### Results Summary
 
 Both the model results and the plot show a clear increase in August stream temperatures over time. The positive and highly significant year coefficient (0.13, p \< 0.001) indicates that temperatures are rising by about 0.13°C per year at the baseline site.
@@ -141,5 +140,3 @@ Both the model results and the plot show a clear increase in August stream tempe
 The plot supports this pattern, with upward-sloping trend lines across all sites. However, the rate of warming differs slightly between locations. Site 14211010 shows a significantly faster increase in temperature compared to the baseline, while site 14211720 does not differ significantly.
 
 Overall, August temperatures are increasing across the Willamette River sites, with some variation in how quickly different locations are warming.
-
-
