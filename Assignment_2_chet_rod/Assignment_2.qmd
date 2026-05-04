@@ -35,7 +35,7 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 
 ```
 
-## August Stream Temperature Analysis
+## Monthly Summary Data - August
 
 This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.
 
