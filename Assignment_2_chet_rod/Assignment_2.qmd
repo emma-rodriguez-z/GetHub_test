@@ -20,14 +20,12 @@ a {
 
 ---
 title: "Assignment 2"
-author: "Emma Rodriguez and Lauren Chetley"
+author: "Lauren Chetley and Emma Rodriguez"
 format: html
 editor: visual
 ---
 
-## Quarto
-
-## Loading in the data
+## Data Loading
 
 ```{r}
 library(dataRetrieval)
