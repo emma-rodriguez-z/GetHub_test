@@ -67,15 +67,17 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 ```{r}
 #filter for January Temperatures 
 library(janitor)
+
 temp_data <- temp_data |>
   clean_names()
+names(temp_data) 
 
 jan_data<-temp_data|>
   filter(month=="Jan")
 
 jan_summary <- jan_data |>
   group_by(site_no, year) |>
-  summarize(mean_temp = mean(temp_C, na.rm = TRUE), .groups = "drop")
+  summarize(mean_temp = mean(temp_c, na.rm = TRUE), .groups = "drop")
 
 ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
   geom_point(alpha = 0.4) +
@@ -132,7 +134,6 @@ ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
   ) +
   theme_minimal()
 ```
-
 
 ### Results Summary
 
