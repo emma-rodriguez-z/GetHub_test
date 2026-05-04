@@ -109,7 +109,10 @@ summary(Jan_model)
 
 ```
 
+### Results Summary January 
+
 January stream temperatures show a slight upward trend over time, though this is only marginally significant. Temperatures differ across sites, with some sites consistently cooler than others. One site shows a stronger and statistically significant warming trend, suggesting that temperature changes vary by location.
+
 ## Monthly Summary Data - August
 
 This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.
@@ -146,7 +149,7 @@ ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
   theme_minimal()
 ```
 
-### Results Summary
+### Results Summary August
 
 Both the model results and the plot show a clear increase in August stream temperatures over time. The positive and highly significant year coefficient (0.13, p \< 0.001) indicates that temperatures are rising by about 0.13°C per year at the baseline site.
 
