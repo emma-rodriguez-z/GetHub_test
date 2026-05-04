@@ -5,6 +5,7 @@ editor: visual
 ---
 
 ## Quarto
+
 ```{r}
 library(dataRetrieval)
 
