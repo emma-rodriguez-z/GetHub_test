@@ -1,5 +1,26 @@
+```{=html}
+<style>
+body {
+  background-color: #fff5f8;
+}
+
+h1, h2, h3 {
+  color: #c2185b;
+}
+
+.title {
+  color: #ad1457;
+}
+
+a {
+  color: #d81b60;
+}
+</style>
+```
+
 ---
-title: "Assignment_2"
+title: "Assignment 2"
+author: "Emma Rodriguez and Lauren Chetley"
 format: html
 editor: visual
 ---
@@ -8,6 +29,7 @@ editor: visual
 ## Loading in the data 
 ```{r}
 library(dataRetrieval)
+library(tidyverse)
 
 siteNumbers <- c("14211720", "14211010", "14166000")
 parameterCd <- "00010"  # water temperature
