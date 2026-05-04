@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Emma Rodriguez and Lauren Chetley">
+<meta name="author" content="Lauren Chetley and Emma Rodriguez">
 
 <title>Assignment 2</title>
 <style>
@@ -92,7 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Emma Rodriguez and Lauren Chetley </p>
+             <p>Lauren Chetley and Emma Rodriguez </p>
           </div>
   </div>
     
@@ -122,11 +122,8 @@ a {
   color: #d81b60;
 }
 </style>
-<section id="quarto" class="level2">
-<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
-</section>
-<section id="loading-in-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="loading-in-the-data">Loading in the data</h2>
+<section id="data-loading" class="level2">
+<h2 class="anchored" data-anchor-id="data-loading">Data Loading</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dataRetrieval)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -187,9 +184,9 @@ read_waterdata_daily.</code></pre>
 </section>
 <section id="monthly-summary-data---january" class="level2">
 <h2 class="anchored" data-anchor-id="monthly-summary-data---january">Monthly Summary Data - January</h2>
+<p>This section examines January stream temperatures from 2010–2023 across three Willamette River sites to assess winter temperature patterns and potential trends over time. The aim of this analysis is to identify whether January temperatures are changing across the different river sites.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#filter for January Temperatures </span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'janitor'</code></pre>
@@ -232,26 +229,63 @@ Attaching package: 'janitor'</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#make some summary statistics </span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co">#make a glm - generalized linear model for the data pulled abor </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>jan_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(temp_data, month <span class="sc">==</span> <span class="st">"Jan"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(temp_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"agency_cd"</span>, <span class="st">"site_no"</span>, <span class="st">"Date"</span>, <span class="st">"temp_c"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>temp_data<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">month</span>(temp_data<span class="sc">$</span>Date, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>temp_data<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(temp_data<span class="sc">$</span>Date)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>jan_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(temp_data, month <span class="sc">==</span> <span class="st">"Jan"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>Jan_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(temp_c <span class="sc">~</span> year <span class="sc">*</span> site_no, <span class="at">data =</span> jan_data)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(Jan_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = temp_c ~ year * site_no, data = jan_data)
+
+Coefficients:
+                      Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept)          -49.47392   29.49719  -1.677   0.0937 .
+year                   0.02778    0.01463   1.899   0.0578 .
+site_no14211010      -82.04155   41.72453  -1.966   0.0495 *
+site_no14211720      -91.71903   41.76399  -2.196   0.0283 *
+year:site_no14211010   0.04008    0.02069   1.937   0.0529 .
+year:site_no14211720   0.04548    0.02071   2.196   0.0283 *
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for gaussian family taken to be 1.509058)
+
+    Null deviance: 2445.9  on 1298  degrees of freedom
+Residual deviance: 1951.2  on 1293  degrees of freedom
+AIC: 4228.9
+
+Number of Fisher Scoring iterations: 2</code></pre>
 </div>
+</div>
+<section id="results-summary-january" class="level3">
+<h3 class="anchored" data-anchor-id="results-summary-january">Results Summary January</h3>
+<p>January stream temperatures show a slight upward trend over time, though this is only marginally significant. Temperatures differ across sites, with some sites consistently cooler than others. One site shows a stronger and statistically significant warming trend, suggesting that temperature changes vary by location.</p>
+</section>
 </section>
 <section id="monthly-summary-data---august" class="level2">
 <h2 class="anchored" data-anchor-id="monthly-summary-data---august">Monthly Summary Data - August</h2>
 <p>This section examines August stream temperatures at three Willamette River sites from 2010 to 2023. August represents late summer conditions, when stream temperatures are typically at their highest and most relevant for aquatic ecosystems. The goal of this analysis is to evaluate whether August temperatures are changing over time and to compare trends across sites.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>aug_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(temp_data, month <span class="sc">==</span> <span class="st">"Aug"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(temp_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"agency_cd"</span>, <span class="st">"site_no"</span>, <span class="st">"Date"</span>, <span class="st">"temp_C"</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>temp_data<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">month</span>(temp_data<span class="sc">$</span>Date, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>temp_data<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(temp_data<span class="sc">$</span>Date)</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>aug_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(temp_data, month <span class="sc">==</span> <span class="st">"Aug"</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>aug_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(temp_C <span class="sc">~</span> year <span class="sc">*</span> site_no, <span class="at">data =</span> aug_data)</span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aug_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>aug_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(temp_data, month <span class="sc">==</span> <span class="st">"Aug"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(temp_data) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"agency_cd"</span>, <span class="st">"site_no"</span>, <span class="st">"Date"</span>, <span class="st">"temp_C"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>temp_data<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">month</span>(temp_data<span class="sc">$</span>Date, <span class="at">label =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>temp_data<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(temp_data<span class="sc">$</span>Date)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>aug_data <span class="ot">&lt;-</span> <span class="fu">subset</span>(temp_data, month <span class="sc">==</span> <span class="st">"Aug"</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>aug_model <span class="ot">&lt;-</span> <span class="fu">glm</span>(temp_C <span class="sc">~</span> year <span class="sc">*</span> site_no, <span class="at">data =</span> aug_data)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(aug_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -278,17 +312,17 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(aug_data, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> temp_C, <span class="at">color =</span> site_no)) <span class="sc">+</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#08306B"</span>, <span class="st">"#2171B5"</span>, <span class="st">"#6BAED6"</span>)) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"August Stream Temperature Trends"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Temperature (°C)"</span>,</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Site"</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(aug_data, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> temp_C, <span class="at">color =</span> site_no)) <span class="sc">+</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>, <span class="at">linewidth =</span> <span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#08306B"</span>, <span class="st">"#2171B5"</span>, <span class="st">"#6BAED6"</span>)) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"August Stream Temperature Trends"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Year"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Temperature (°C)"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Site"</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
@@ -300,12 +334,14 @@ Number of Fisher Scoring iterations: 2</code></pre>
 </div>
 </div>
 </div>
-<section id="results-summary" class="level3">
-<h3 class="anchored" data-anchor-id="results-summary">Results Summary</h3>
+<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD ### Results Summary ======= ### Results Summary August &gt;&gt;&gt;&gt;&gt;&gt;&gt; 3611aa925ec1cb4235d072ce59becfe633d32732</p>
 <p>Both the model results and the plot show a clear increase in August stream temperatures over time. The positive and highly significant year coefficient (0.13, p &lt; 0.001) indicates that temperatures are rising by about 0.13°C per year at the baseline site.</p>
 <p>The plot supports this pattern, with upward-sloping trend lines across all sites. However, the rate of warming differs slightly between locations. Site 14211010 shows a significantly faster increase in temperature compared to the baseline, while site 14211720 does not differ significantly.</p>
-<p>Overall, August temperatures are increasing across the Willamette River sites, with some variation in how quickly different locations are warming.</p>
+<p>Overall, August temperatures are increasing across the Willamette River sites, with some variation in how quickly different locations are warming. &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD =======</p>
 </section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Overall, stream temperatures in both August and January show increasing trends over time, though the warming is much stronger and more consistent in August. While all sites generally follow similar patterns, the rate of warming varies by location, with some sites experiencing faster temperature increases than others. These results suggest that stream temperatures are rising across the Willamette River system, which could affect water conditions and aquatic life. &gt;&gt;&gt;&gt;&gt;&gt;&gt; 3611aa925ec1cb4235d072ce59becfe633d32732</p>
 </section>
 
 </main>
