@@ -134,6 +134,7 @@ summary(aug_model)
 ```
 
 ```{r}
+
 ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
   geom_point(alpha = 0.3) +
   geom_smooth(method = "lm", se = FALSE, linewidth = 1.2) +
@@ -145,6 +146,7 @@ ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
     color = "Site"
   ) +
   theme_minimal()
+
 ```
 
 <<<<<<< HEAD
