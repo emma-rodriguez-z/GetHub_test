@@ -1,9 +1,32 @@
+```{=html}
+<style>
+body {
+  background-color: #fff5f8;
+}
+
+h1, h2, h3 {
+  color: #c2185b;
+}
+
+.title {
+  color: #ad1457;
+}
+
+a {
+  color: #d81b60;
+}
+</style>
+```
+
 ---
-title: "Assignment_2"
+title: "Assignment 2"
+author: "Emma Rodriguez and Lauren Chetley"
 format: html
 editor: visual
 ---
 
+## Quarto
+## Loading in the data 
 ```{r}
 library(dataRetrieval)
 library(tidyverse)
@@ -15,6 +38,8 @@ endDate <- "2023-12-31"
 
 temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
 ```
+
+## Organizing Data 
 
 ```{r}
 # rename columns for clarity
@@ -56,26 +81,37 @@ summary(aug_model)
 
 
 ```
+## Monthly Summary Data - January
 
 ```{r}
-#Aug Plot
-ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
-  geom_point(alpha = 0.3) +
-  geom_smooth(method = "lm", se = FALSE, linewidth = 1.2) +
-  scale_color_manual(values = c("#08306B", "#2171B5", "#6BAED6")) +
-  labs(
-    title = "August Stream Temperature Trends",
-    x = "Year",
-    y = "Temperature (°C)",
-    color = "Site"
-  ) +
+#filter for January Temperatures 
+library(janitor)
+temp_data <- temp_data |>
+  clean_names()
+
+jan_data<-temp_data|>
+  filter(month=="Jan")
+
+jan_summary <- jan_data |>
+  group_by(site_no, year) |>
+  summarize(mean_temp = mean(temp_C, na.rm = TRUE), .groups = "drop")
+
+ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = TRUE) +
+  scale_color_manual(values = c(
+    "#4CC9F0", 
+    "#F72585", 
+    "#66FF00"  
+  )) +
+  labs(title = "January Stream Temperature Trends at Willamette River Sites",
+       x = "Year",
+       y = "Temperature (°C)",
+       color = "Site Number") +
   theme_minimal()
+  
+
+#make some summary statistics 
+#make a glm - generalized linear model for the data pulled abor 
+
 ```
-
-## August Temperature Trend Results
-
-The GLM results indicate a statistically significant increase in August stream temperatures over time. The coefficient for year (0.12975, p \< 0.001) shows that temperatures are increasing by approximately 0.13°C per year at the baseline site.
-
-The interaction terms reveal differences in trends between sites. Site 14211010 has a significantly higher rate of warming (0.04627, p \< 0.01), indicating that temperatures at this site are increasing faster than the baseline. In contrast, site 14211720 does not show a statistically significant difference in trend (p = 0.366), suggesting similar warming patterns to the baseline site.
-
-Overall, the results show a clear warming trend in August stream temperatures, with some variation in the rate of increase across sites.

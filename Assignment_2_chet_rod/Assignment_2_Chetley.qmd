@@ -1,0 +1,54 @@
+---
+title: "Assignment_2_Chetley"
+author: "Lauren Chetley"
+format: html
+editor: visual
+---
+
+## Loading in the data
+
+```{r}
+library(dataRetrieval)
+
+siteNumbers <- c("14211720", "14211010", "14166000")
+parameterCd <- "00010"  # water temperature
+startDate <- "2010-01-01"
+endDate <- "2023-12-31"
+
+temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
+```
+
+## Organizing Data
+
+```{r}
+# rename columns for clarity
+library(date)
+library(lubridate)
+library(tidyverse)
+colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_C")
+# extract some date info for use later
+temp_data$month = month(temp_data$Date, label=TRUE)
+temp_data$year = year(temp_data$Date)
+
+# check by plotting
+ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
+  geom_line() +
+  labs(title="Stream Temperature at Willamette River Sites",
+       x="Date", y="Temperature (°C)", color="Site Number") +
+  theme_minimal()
+
+```
+
+## Monthly Summary Data - January
+
+```{r}
+`#filter for January Temperatures 
+jan_data<-temp_data|>
+  select(month,temp_C,year)|>
+  filter(month=="Jan")|>
+  filter(year=="2010")
+
+#make some summary statistics 
+#make a glm - generalized linear model for the data pulled abor 
+
+```
