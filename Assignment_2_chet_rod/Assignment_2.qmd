@@ -26,7 +26,9 @@ editor: visual
 ---
 
 ## Quarto
-## Loading in the data 
+
+## Loading in the data
+
 ```{r}
 library(dataRetrieval)
 library(tidyverse)
@@ -39,7 +41,7 @@ endDate <- "2023-12-31"
 temp_data <- readNWISdv(siteNumbers, parameterCd, startDate, endDate)
 ```
 
-## Organizing Data 
+## Organizing Data
 
 ```{r}
 # rename columns for clarity
@@ -62,8 +64,11 @@ ggplot(temp_data, aes(x=Date, y=temp_C, color=site_no)) +
 
 ## Monthly Summary Data - January
 
+This section examines January stream temperatures from 2010–2023 across three Willamette River sites to assess winter temperature patterns and potential trends over time. The aim of this analysis is to identify whether January temperatures are changing across the different river sites.
+
 ```{r}
-#filter for January Temperatures 
+
+
 library(janitor)
 temp_data <- temp_data |>
   clean_names()
@@ -88,9 +93,20 @@ ggplot(jan_data, aes(x = year, y = temp_c, color = site_no)) +
        y = "Temperature (°C)",
        color = "Site Number") +
   theme_minimal()
+
+jan_data <- subset(temp_data, month == "Jan")
+
+colnames(temp_data) <- c("agency_cd", "site_no", "Date", "temp_c")
+
+temp_data$month <- month(temp_data$Date, label = TRUE)
+temp_data$year <- year(temp_data$Date)
+
+jan_data <- subset(temp_data, month == "Jan")
+Jan_model <- glm(temp_c ~ year * site_no, data = jan_data)
+
+summary(Jan_model)
   
 
-#make some summary statistics 
-#make a glm - generalized linear model for the data pulled abor 
-
 ```
+
+January stream temperatures show a slight upward trend over time, though this is only marginally significant. Temperatures differ across sites, with some sites consistently cooler than others. One site shows a stronger and statistically significant warming trend, suggesting that temperature changes vary by location.
