@@ -133,6 +133,7 @@ ggplot(aug_data, aes(x = year, y = temp_C, color = site_no)) +
   theme_minimal()
 ```
 
+
 ### Results Summary
 
 Both the model results and the plot show a clear increase in August stream temperatures over time. The positive and highly significant year coefficient (0.13, p \< 0.001) indicates that temperatures are rising by about 0.13°C per year at the baseline site.
